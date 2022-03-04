@@ -30,8 +30,9 @@ void setup()
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop() 
+{
+  
 
 }
 
@@ -70,4 +71,37 @@ void task5()
   } 
   POT_average = POT_total/numPOT_values;
   Serial.println(POT_average);
+}
+
+void task6()
+{
+  for (int i = 0; i<99; i++)
+  {
+    __asm__ __volatile__ ("nop");
+  }
+}
+
+void task7()
+{
+  if (POT_average>(2048/2))
+  {
+    error_code = 1;
+  }
+  else 
+  {
+    error_code = 0;
+  }
+}
+
+void task8()
+{
+  if (error_code == 1)
+  {
+    digitalWrite(ERROR_PIN, HIGH);
+  }
+
+  else
+  {
+    digitalWrite(ERROR_PIN, LOW);
+  }
 }
