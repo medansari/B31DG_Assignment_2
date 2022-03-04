@@ -15,6 +15,7 @@ void setup()
   pinMode(SigB, OUTPUT);
   pinMode(SigG, INPUT);
   pinMode(Sensor, INPUT);
+  Serial.begin(9600);
 
 }
 
@@ -22,3 +23,17 @@ void loop() {
   // put your main code here, to run repeatedly:
 
 }
+
+void task1()
+{
+  digitalWrite(SigB, HIGH);
+  delayMicroseconds(1300);
+  digitalWrite(SigB, LOW);
+}
+
+void task2()
+{
+  int buttonState = digitalRead(Push_button);
+  Serial.println(buttonState);
+}
+
