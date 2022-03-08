@@ -12,7 +12,14 @@ int POT_index;                  // POT value indexing
 int POT_total = 0;              // POT total
 int POT_average = 0;            // POT average
 
+int error_code = 0;
 
+unsigned long durationOn;
+unsigned long durationOff;
+unsigned long durationTotal;
+unsigned long freq;
+
+String AverageOne, Average;
 
 void setup() 
 {
@@ -32,7 +39,7 @@ void setup()
 
 void loop() 
 {
-  
+ task3();
 
 }
 
@@ -51,6 +58,10 @@ void task2()
 
 void task3()
 {
+  durationOn = pulseIn(SigG, HIGH);
+  durationOff = pulseIn(SigG, LOW);
+  durationTotal = (durationOn+durationOff)*100000;
+  Serial.println(durationTotal);
 
 }
 
@@ -62,15 +73,22 @@ void task4()
 
 void task5()
 {
+
   POT_total = POT_total + POT_Value[POT_index];
   POT_index = POT_index + 1;
+  Serial.println(POT_Value[0]);
+  Serial.println(POT_Value[1]);
+  Serial.println(POT_Value[2]);
+  Serial.println(POT_Value[3]);
 
   if (POT_index >= numPOT_values)
   {
     POT_index = 0;
   } 
   POT_average = POT_total/numPOT_values;
-  Serial.println(POT_average);
+  AverageOne = "Average:";
+  Average =  AverageOne + POT_average;
+  Serial.println(Average);
 }
 
 void task6()
@@ -83,7 +101,7 @@ void task6()
 
 void task7()
 {
-  if (POT_average>(2048/2))
+  if (POT_average>(4095/2))
   {
     error_code = 1;
   }
