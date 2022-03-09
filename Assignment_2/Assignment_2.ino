@@ -5,6 +5,7 @@
 #define SigB 21
 #define SigG 15
 #define POT 14
+#define timer_pin 26
 
 const int numPOT_values = 4;    // size of the array for storing potentiometer values
 int POT_Value[numPOT_values];   // readings from the POT input
@@ -13,19 +14,22 @@ int POT_total = 0;              // POT total
 int POT_average = 0;            // POT average
 
 int error_code = 0;
+int buttonState;
 
-unsigned long durationOn;
-unsigned long durationOff;
-unsigned long durationTotal;
-unsigned long freq;
+ unsigned long duration;
+ unsigned long durationTotal;
+ float freq;
 
-String AverageOne, Average;
+ Ticker Timer;
+ int ticks = 0;
 
 void setup() 
 {
+  Timer.attach_ms(10, periodicPrint);
   pinMode(ERROR_PIN, OUTPUT);
   pinMode(Push_button, INPUT);
   pinMode(SigB, OUTPUT);
+  pinMode(timer_pin, OUTPUT);
   pinMode(SigG, INPUT);
   pinMode(POT, INPUT);
   Serial.begin(9600);
@@ -37,6 +41,64 @@ void setup()
 
 }
 
+void periodicPrint() 
+{
+ /* int task1_rate =;
+  int task2_rate =;
+  int task3_rate =;
+  int task4_rate =;
+  int task5_rate =;
+  int task6_rate =;
+  int task7_rate =;
+  int task8_rate =;
+  int task9_rate =;
+  
+  int rate = map(task1_rate, task2_rate, task3_rate, task4_rate,task5_rate, task6_rate, task7_rate, task8_rate, task9_rate, 0, 9);
+  switch (rate)
+  {
+    case 0:
+    task1();
+    break:
+    
+    case 1:
+    task2();
+    break;
+
+    case 2:
+    task3();
+    break:
+    
+    case 3:
+    task4();
+    break;
+
+    case 4:
+    task5();
+    break:
+    
+    case 5:
+    task6();
+    break;
+
+    case 6:
+    task7();
+    break:
+    
+    case 7:
+    task8();
+    break;
+
+    case 8:
+    task9();
+    break:
+    
+    case 9:
+    //No operation.
+    break;
+    
+  }
+*/}
+
 void loop() 
 {
  task3();
@@ -46,23 +108,23 @@ void loop()
 void task1()
 {
   digitalWrite(SigB, HIGH);
-  delayMicroseconds(1300);
+  delayMicroseconds(50);
   digitalWrite(SigB, LOW);
+  delayMicroseconds(50);
 }
 
 void task2()
 {
-  int buttonState = digitalRead(Push_button);
-  Serial.println(buttonState);
+  delayMicroseconds(2);
+  buttonState = digitalRead(Push_button);
+  delayMicroseconds(2);
 }
 
 void task3()
 {
-  durationOn = pulseIn(SigG, HIGH);
-  durationOff = pulseIn(SigG, LOW);
-  durationTotal = (durationOn+durationOff)*100000;
-  Serial.println(durationTotal);
-
+  duration = pulseIn(SigG, HIGH);
+  durationTotal = (duration*2);
+  freq = (1000000/(durationTotal));
 }
 
 void task4()
@@ -73,22 +135,13 @@ void task4()
 
 void task5()
 {
-
   POT_total = POT_total + POT_Value[POT_index];
   POT_index = POT_index + 1;
-  Serial.println(POT_Value[0]);
-  Serial.println(POT_Value[1]);
-  Serial.println(POT_Value[2]);
-  Serial.println(POT_Value[3]);
-
   if (POT_index >= numPOT_values)
   {
     POT_index = 0;
   } 
   POT_average = POT_total/numPOT_values;
-  AverageOne = "Average:";
-  Average =  AverageOne + POT_average;
-  Serial.println(Average);
 }
 
 void task6()
@@ -122,4 +175,16 @@ void task8()
   {
     digitalWrite(ERROR_PIN, LOW);
   }
+}
+
+void task9()
+{
+  delay(1);
+  Serial.println(".");
+  Serial.print(buttonState);
+  Serial.print(",");
+  Serial.print(freq);
+  Serial.print(",");
+  Serial.print(POT_average);
+  delay(1);
 }
