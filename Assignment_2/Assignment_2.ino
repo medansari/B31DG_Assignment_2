@@ -19,6 +19,8 @@ int buttonState;
  unsigned long duration;
  unsigned long durationTotal;
  float freq;
+ 
+
 
  Ticker Timer;
  int ticks = 0;
@@ -43,65 +45,60 @@ void setup()
 
 void periodicPrint() 
 {
- /* int task1_rate =;
-  int task2_rate =;
-  int task3_rate =;
-  int task4_rate =;
-  int task5_rate =;
-  int task6_rate =;
-  int task7_rate =;
-  int task8_rate =;
-  int task9_rate =;
+  ticks++;
+  int task1_rate =(ticks % 1);
+  int task2_rate =(ticks % 20);
+  int task3_rate =(ticks % 100);
+  int task4_5_rate =(ticks % 4);
+  int task6_rate =(ticks % 10);
+  int task7_8_rate =(ticks % 33);
+  int task8_rate =(ticks % 33);
+  int task9_rate =(ticks % 500);
+
+
+if (task1_rate == 0)
+{
+  task1();
+}
+
+else if (task2_rate == 0)
+{
+  task2();
+}
+
+else if (task3_rate == 0)
+{
+  task3();
+}
+
+else if (task4_5_rate == 0)
+{
+  task4();
+  task5();
+}
+else if (task6_rate == 0)
+{
+  task6();
+}
+
+else if (task7_8_rate == 0)
+{
+  task7();
+  task8();
+}
+
+else if (task9_rate == 0)
+{
+  task9();
+  ticks = 0;
+}
   
-  int rate = map(task1_rate, task2_rate, task3_rate, task4_rate,task5_rate, task6_rate, task7_rate, task8_rate, task9_rate, 0, 9);
-  switch (rate)
-  {
-    case 0:
-    task1();
-    break:
-    
-    case 1:
-    task2();
-    break;
 
-    case 2:
-    task3();
-    break:
-    
-    case 3:
-    task4();
-    break;
-
-    case 4:
-    task5();
-    break:
-    
-    case 5:
-    task6();
-    break;
-
-    case 6:
-    task7();
-    break:
-    
-    case 7:
-    task8();
-    break;
-
-    case 8:
-    task9();
-    break:
-    
-    case 9:
-    //No operation.
-    break;
-    
-  }
-*/}
+}
 
 void loop() 
 {
- task3();
+
 
 }
 
